@@ -10,3 +10,7 @@ torch==2.2.1
 numpy==1.26.4
 filetype==1.2.0
 rapidfuzz==3.13.0
+gunicorn
+pdf2image==1.17.0
+pandas==2.2.3
+openpyxl==3.1.5

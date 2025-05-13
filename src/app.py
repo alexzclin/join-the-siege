@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify
-
+import logging
 from src.classifier import classify_file
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
 
-ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'docx'}
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'docx', 'xlsx', 'csv', 'txt'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
