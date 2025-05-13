@@ -27,6 +27,3 @@ jobs:
     - name: Run Tests
       run: |
         pytest tests/
-
-    - name: Build Docker Image
-      run: docker build -t file-classifier .

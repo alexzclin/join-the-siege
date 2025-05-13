@@ -1,16 +1,13 @@
 from flask import Flask, request, jsonify, g
-import logging
 from src.classifier import classify_file
-from src.config.logging_config import setup_logging
+from src.configs.logging_config import setup_logging
 import uuid
+from werkzeug.exceptions import RequestEntityTooLarge
+from src.utils.file_utils import allowed_file
 
 setup_logging()
 app = Flask(__name__)
-
-ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'docx', 'xlsx', 'csv', 'txt'}
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB file size limit
 
 @app.before_request
 def assign_request_id():
@@ -31,6 +28,10 @@ def classify_file_route():
 
     file_class = classify_file(file)
     return jsonify({"file_class": file_class}), 200
+
+@app.errorhandler(RequestEntityTooLarge)
+def handle_file_too_large(e):
+    return jsonify({"error": "File is too large"}), 413
 
 
 if __name__ == '__main__':

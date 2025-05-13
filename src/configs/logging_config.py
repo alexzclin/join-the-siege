@@ -15,8 +15,8 @@ class RequestIdFilter(logging.Filter):
 
 class SafeFormatter(logging.Formatter):
     """
-    Formatter that ensures `request_id` is always present,
-    even if some logs bypass the filter.
+    Formatter that ensures `request_id` is always present
+    even if some logs bypass the filter to prevent errors.
     """
     def format(self, record):
         if not hasattr(record, 'request_id'):
