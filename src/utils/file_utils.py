@@ -8,7 +8,6 @@ import logging
 import pandas as pd
 from io import BytesIO
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def extract_text_from_pdf(file: FileStorage) -> str:

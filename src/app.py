@@ -1,16 +1,20 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 import logging
 from src.classifier import classify_file
+from src.config.logging_config import setup_logging
+import uuid
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
+setup_logging()
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'docx', 'xlsx', 'csv', 'txt'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.before_request
+def assign_request_id():
+    g.request_id = request.headers.get('X-Request-ID', str(uuid.uuid4()))
 
 @app.route('/classify_file', methods=['POST'])
 def classify_file_route():

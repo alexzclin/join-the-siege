@@ -7,7 +7,6 @@ import filetype
 from rapidfuzz import fuzz
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
