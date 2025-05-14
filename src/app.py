@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify, g
-from src.classifier import classify_file
+from src.classifiers.classifier import classify_file
 from src.configs.logging_config import setup_logging
 import uuid
 from werkzeug.exceptions import RequestEntityTooLarge
 from src.utils.file_utils import allowed_file
+from src.configs.app_config import MAX_CONTENT_LENGTH
 
 setup_logging()
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB file size limit
+app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 @app.before_request
 def assign_request_id():

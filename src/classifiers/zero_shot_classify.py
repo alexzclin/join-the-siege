@@ -9,6 +9,6 @@ classifier = pipeline('zero-shot-classification', model='facebook/bart-large-mnl
 def zero_shot_classify(text: str) -> Tuple[str, float]:
     result = classifier(text, candidate_labels=FILE_LABELS)
     label, score = result['labels'][0], result['scores'][0]
-    logger.info(f"Zero-shot classification score: {score}")
+    logger.info(f"Zero-shot classification label: {label}, score: {score}")
     score = round(score, 2)
     return (label, score) if score >= ZERO_SHOT_SCORE else ('unknown', score)

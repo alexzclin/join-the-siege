@@ -11,7 +11,11 @@ torch==2.2.1
 numpy==1.26.4
 filetype==1.2.0
 rapidfuzz==3.13.0
-gunicorn
+gunicorn==23.0.0
 pdf2image==1.17.0
 pandas==2.2.3
 openpyxl==3.1.5
+sentence-transformers==4.1.0
+scikit-learn==1.6.1
+Faker==37.1.0
+hf-xet==1.1.1

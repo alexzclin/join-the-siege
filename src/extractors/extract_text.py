@@ -5,11 +5,11 @@ from src.extractors.registry import MIME_EXTRACTOR_REGISTRY, EXTENSION_EXTRACTOR
 
 logger = logging.getLogger(__name__)
 
-def extract_text(file: FileStorage, type: str) -> str:
-    extractor_type = MIME_EXTRACTOR_REGISTRY.get(type)
+def extract_text(file: FileStorage, mime: str) -> str:
+    extractor_type = MIME_EXTRACTOR_REGISTRY.get(mime)
 
     # fall back to extension type for ambiguous mime
-    if not extractor_type and type == "application/zip":
+    if not extractor_type and mime == "application/zip":
         ext = os.path.splitext(file.filename)[-1].lower()
         extractor_type = EXTENSION_EXTRACTOR_REGISTRY.get(ext)
 

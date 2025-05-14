@@ -1,10 +1,13 @@
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'docx', 'xlsx'}
+MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10 MB file size limit
 
 # Minimum confidence scores
 FUZZY_SCORE = 90
 ZERO_SHOT_SCORE = 0.9
+SBERT_SCORE = 0.9
 
 # File categories and keywords for fuzzy string matching
+# Add similar entries here when expanding to new industries
 FILE_LABELS = ['drivers_licence', 'bank_statement', 'invoice', 'unknown']
 MATCH_TERMS = {
     'drivers_licence': [
@@ -24,3 +27,7 @@ MATCH_TERMS = {
         'invoice date', 'billing address', 'payment terms', 'item description'
     ]
 }
+
+# BERT configurations
+SBERT_MODEL = "all-MiniLM-L6-v2"
+CLASSIFIER_PATH = "src/document_classifier.pkl"
