@@ -39,6 +39,19 @@ def generate_drivers_license():
     Expiry: {fake.date_between(start_date="+1y", end_date="+10y")}
     """
 
+def generate_health_insurance_card():
+    return f"""
+    Health Insurance Card
+    Name: {fake.name()}
+    Policy Number: {fake.bothify('??#########')}
+    Member ID: {fake.uuid4()}
+    Group #: {fake.random_int(1000, 9999)}
+    Plan Type: {fake.random_element(elements=('HMO', 'PPO', 'EPO', 'POS'))}
+    Coverage Start Date: {fake.date_this_year()}
+    Coverage End Date: {fake.date_between(start_date="+1y", end_date="+5y")}
+    Issuer: {fake.company()}
+    """
+
 # Generate samples
 samples = []
 labels = []
@@ -51,6 +64,9 @@ for _ in range(500):
 
     samples.append(generate_drivers_license())
     labels.append("drivers_license")
+
+    samples.append(generate_health_insurance_card())
+    labels.append("health_insurance_card")
 
 # Save as CSV
 df = pd.DataFrame({'text': samples, 'label': labels})

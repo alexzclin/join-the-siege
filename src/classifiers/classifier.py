@@ -36,7 +36,7 @@ def classify_file(file: FileStorage) -> Dict:
         }
 
     fuzzy_label, fuzzy_score = fuzzy_classify(extracted_text)
-    if fuzzy_score >= FUZZY_SCORE / 100:
+    if fuzzy_score >= FUZZY_SCORE:
         logger.info(f"File {file.filename} classified using fuzzy string classification with label {fuzzy_label} and confidence {fuzzy_score}")
         return {
             'label': fuzzy_label,
@@ -53,14 +53,14 @@ def classify_file(file: FileStorage) -> Dict:
             'method': 'sentence_bert'
         }
     
-    # zero_shot_label, zero_shot_score = zero_shot_classify(extracted_text)
-    # if zero_shot_score >= ZERO_SHOT_SCORE:
-    #     logger.info(f"File {file.filename} classified using zero-shot classification with label {zero_shot_label} and confidence {zero_shot_score}")
-    #     return {
-    #         'label': zero_shot_label,
-    #         'confidence': zero_shot_score,
-    #         'method': 'zero_shot'
-    #     }
+    zero_shot_label, zero_shot_score = zero_shot_classify(extracted_text)
+    if zero_shot_score >= ZERO_SHOT_SCORE:
+        logger.info(f"File {file.filename} classified using zero-shot classification with label {zero_shot_label} and confidence {zero_shot_score}")
+        return {
+            'label': zero_shot_label,
+            'confidence': zero_shot_score,
+            'method': 'zero_shot'
+        }
     
     logger.info(f"File {file.filename} could not be classified with sufficient confidence")
     return {'label': 'unknown', 'confidence': 0.0, 'method': 'uncategorizable'}

@@ -10,6 +10,7 @@ class ImageExtractor(BaseExtractor):
     def extract(self, file: FileStorage) -> str:
         try:
             image = Image.open(file)
+            image = self._preprocess_image_for_ocr(image)
             return pytesseract.image_to_string(image)
         except Exception as e:
             logger.error(f"Error extracting from image: {e}", exc_info=True)
