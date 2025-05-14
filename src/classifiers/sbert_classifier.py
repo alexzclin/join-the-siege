@@ -31,4 +31,4 @@ def sbert_classify(text: str) -> Tuple[str, float]:
     label = clf.predict([embedding])[0]
     score = max(clf.predict_proba([embedding])[0])
     logger.info(f"Sentence-BERT classification label: {label}, score: {score}")
-    return label, score
+    return label, round(score, 2)

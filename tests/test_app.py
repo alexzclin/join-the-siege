@@ -1,7 +1,7 @@
 from io import BytesIO
 
 import pytest
-from src.app import app, allowed_file
+from src.app import app
 
 @pytest.fixture
 def client():
@@ -9,16 +9,6 @@ def client():
     with app.test_client() as client:
         yield client
 
-
-@pytest.mark.parametrize("filename, expected", [
-    ("file.pdf", True),
-    ("file.png", True),
-    ("file.jpg", True),
-    ("file.txt", False),
-    ("file", False),
-])
-def test_allowed_file(filename, expected):
-    assert allowed_file(filename) == expected
 
 def test_no_file_in_request(client):
     response = client.post('/classify_file')
@@ -38,8 +28,15 @@ def test_success(client, mocker):
     assert response.get_json() == {"file_class": "test_class"}
 
 def test_large_file_rejected_by_config(client):
-    big_file = BytesIO(b'x' * (10 * 1024 * 1024 + 1))  # >10MB
-    data = {'file': (big_file, 'file.txt')}
+    big_file = BytesIO(b'x' * (10 * 1024 * 1024 + 1))
+    data = {'file': (big_file, 'file.pdf')}
     response = client.post('/classify_file', data=data, content_type='multipart/form-data')
     assert response.status_code == 413
     assert response.json['error'] == "File is too large"
+
+def test_file_type_not_allowed(client):
+    data = {'file': (BytesIO(b"fake content"), 'test.txt')}
+    response = client.post('/classify_file', data=data)
+    assert response.status_code == 400
+    json_response = response.get_json()
+    assert json_response['error'] == 'File type not allowed'

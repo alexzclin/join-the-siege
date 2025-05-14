@@ -11,20 +11,26 @@ ZERO_SHOT_SCORE = 0.8
 FILE_LABELS = ['drivers_licence', 'bank_statement', 'invoice', 'health_insurance_card' 'unknown']
 MATCH_TERMS = {
     'drivers_licence': [
-        'driver\'s license', 'drivers licence', 'driver license',
-        'id card', 'identity card', 'identification',
-        'license number', 'dl number', 'class', 'expiry date', 'issued', 'endorsements'
+        "driver's license", "drivers licence", "driver license",
+        "dl number", "license number", "licence no", "class", "expiry date",
+        "date of birth", "dob", "issued on", "issuing state", "endorsements",
+        "restrictions", "state of issue", "sex", "eye color", "height",
+        "organ donor", "identification card", "id card", "identity card"
     ],
     'bank_statement': [
-        'bank statement', 'statement of account', 'account summary',
-        'transaction history', 'account activity', 'account balance',
-        'deposit', 'withdrawal', 'direct deposit', 'statement period',
-        'available balance', 'opening balance', 'closing balance'
+        "bank statement", "statement of account", "account summary",
+        "account activity", "transaction history", "deposits", "withdrawals",
+        "direct deposit", "available balance", "account balance",
+        "statement date", "opening balance", "closing balance",
+        "account holder", "account number", "routing number",
+        "interest earned", "monthly summary", "financial institution"
     ],
     'invoice': [
-        'invoice', 'receipt', 'bill', 'purchase order', 'order number',
-        'amount due', 'subtotal', 'total amount', 'due date',
-        'invoice date', 'billing address', 'payment terms', 'item description'
+        "invoice", "invoice number", "receipt", "sales receipt", "bill",
+        "purchase order", "po number", "order number", "invoice date",
+        "billing address", "shipping address", "amount due", "due date",
+        "item", "item description", "quantity", "unit price", "subtotal",
+        "tax", "total", "total amount", "payment terms", "paid", "balance due"
     ],
     'health_insurance_card': [
         'health insurance card', 'insurance card', 'health plan card', 'medical insurance card',
@@ -34,6 +40,7 @@ MATCH_TERMS = {
     ]
 }
 
-# BERT configurations
+# model configurations
 SBERT_MODEL = "all-MiniLM-L6-v2"
 CLASSIFIER_PATH = "src/document_classifier.pkl"
+ZERO_SHOT_MODEL = "facebook/bart-large-mnli"
